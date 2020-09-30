@@ -23,7 +23,7 @@ const circleOptions = {
 const center = {lat: -5.154112, lng: 119.437187};
 
 export default function Maps() {
-	const {location} = useContext(LocationContext);
+	const {location, showDetails} = useContext(LocationContext);
 	const mapRef = useRef();
 	const firstRender = useRef(true);
 
@@ -45,7 +45,7 @@ export default function Maps() {
 			firstRender.current = false;
 			return;
 		}
-		panTo({lat: location.lat, lng: location.lng});
+		panTo({lat: location.location.lat, lng: location.location.lng});
 	}, [location]);
 
 	if (loadError) return "Error";
@@ -60,11 +60,13 @@ export default function Maps() {
 				onLoad={onMapLoad}
 				options={mapOptions}
 			>
-				<Circle
-					center={{lat: location.lat, lng: location.lng}}
-					radius={6000}
-					options={circleOptions}
-				/>
+            {showDetails &&
+               <Circle
+                  center={{lat: location.location.lat, lng: location.location.lng}}
+                  radius={6000}
+                  options={circleOptions}
+               />
+            }
 			</GoogleMap>
 		</div>
 	);

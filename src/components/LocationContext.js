@@ -5,6 +5,7 @@ export const LocationContext = createContext();
 export default function LocationProvider(props) {
    const [ location, setLocation ] = useState({})
    const [ isLoading, setIsLoading ] = useState(false)
+   const [ showDetails, setShowDetails ] = useState(false)
 
    const getLocation = async (ipAddress) => {
 		try {
@@ -12,15 +13,16 @@ export default function LocationProvider(props) {
 				`https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IP_GEOLOCATION}&ipAddress=${ipAddress}`
          );
          const res = await data.json();
-         setLocation({ lat: res.location.lat, lng: res.location.lng })
+         setLocation(res)
          console.log({ lat: res.location.lat, lng: res.location.lng })
          setIsLoading(false)
+         setShowDetails(true)
 		} catch (error) {
          console.error(error);
 		}
    };
 
-   const value = {getLocation, location, isLoading, setIsLoading }
+   const value = {getLocation, location, isLoading, setIsLoading, showDetails }
 
    return (
       <LocationContext.Provider value={value}>
