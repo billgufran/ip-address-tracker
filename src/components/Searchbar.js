@@ -22,20 +22,23 @@ function Searchbar() {
 	};
 
 	return (
-		<div className="above mid top">
+		<div className="above mid bottom">
 			<form value={inputRef} onChange={handleChange} onSubmit={handleSubmit}>
 				<FormControl isDisabled={isLoading}>
 					<InputGroup>
 						<Input
+							className="container"
+							variant="filled"
 							type="text"
 							placeholder="Search any IP address"
-							className="container"
-							rounded="20px"
+							color="gray.800"
+							w={{base: "85vw", md: 350}}
+							fontWeight="medium"
 						/>
 						<InputRightElement>
 							<IconButton
 								aria-label="Search location"
-								icon={<Search2Icon/>}
+								icon={<Search2Icon color="gray.500"/>}
 								isRound
 								type="submit"
 								isLoading={isLoading}

@@ -1,5 +1,6 @@
 import { Circle, GoogleMap, useLoadScript } from "@react-google-maps/api";
 import React, { useCallback, useContext, useEffect, useRef } from "react";
+import mapStyles from "../mapStyles";
 import { LocationContext } from "./LocationContext";
 
 const mapContainerStyle = {
@@ -8,8 +9,8 @@ const mapContainerStyle = {
 };
 
 const mapOptions = {
+   styles: mapStyles,
 	disableDefaultUI: true,
-	zoomControl: true,
 };
 
 const circleOptions = {
