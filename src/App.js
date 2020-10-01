@@ -1,4 +1,4 @@
-import { CSSReset, ThemeProvider } from "@chakra-ui/core";
+import { ChakraProvider } from "@chakra-ui/core";
 import React from "react";
 import LocationProvider from "./components/LocationContext";
 import LocationDetails from "./components/LocationDetails";
@@ -8,14 +8,13 @@ import Searchbar from "./components/Searchbar";
 export default function App() {
 	return (
 		<div>
-			<ThemeProvider>
-				<CSSReset />
+			<ChakraProvider>
 				<LocationProvider>
 					<Searchbar />
 					<LocationDetails />
 					<Maps />
 				</LocationProvider>
-			</ThemeProvider>
+			</ChakraProvider>
 		</div>
 	);
 }

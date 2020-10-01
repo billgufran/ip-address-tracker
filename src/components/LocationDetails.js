@@ -4,9 +4,9 @@ import { LocationContext } from "./LocationContext";
 
 function Data({type, value}) {
 	return (
-		<Box p={5} borderWidth="1px">
-			<Text mt={4}>{type.toUpperCase()}</Text>
-			<Heading fontSize="xl">{value}</Heading>
+		<Box w="33%" p={5}>
+			<Text m={0} fontSize="xs" letterSpacing="0.05em">{type.toUpperCase()}</Text>
+			<Heading fontWeight="medium" fontSize="2xl">{value}</Heading>
 		</Box>
 	);
 }
@@ -17,7 +17,14 @@ function LocationDetails() {
 	return (
 		<div className="above mid">
 			{showDetails && (
-				<Box shadow="md" display="flex" w={650} h={130}>
+				<Box
+					shadow="md"
+					display="flex"
+					w={650}
+					h={130}
+               className="container"
+               rounded="20px"
+				>
 					<Data
 						type="Location"
 						value={`${location.location.city}, ${location.location.region}`}
