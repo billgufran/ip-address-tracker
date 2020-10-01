@@ -46,3 +46,9 @@ code {
     margin-top: 25px;
   }
 }
+
+@media screen and (max-width: 640px) {
+	.bottom {
+		margin-bottom: 80px;
+	 }
+}
