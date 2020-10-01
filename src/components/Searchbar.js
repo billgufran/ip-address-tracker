@@ -1,19 +1,29 @@
 import {
 	FormControl,
+	FormErrorMessage,
 	IconButton,
 	Input,
 	InputGroup,
 	InputRightElement
 } from "@chakra-ui/core";
-import { Search2Icon } from '@chakra-ui/icons';
+import { Search2Icon } from "@chakra-ui/icons";
 import React, { useContext, useRef } from "react";
 import { LocationContext } from "./LocationContext";
 
 function Searchbar() {
-	const {getLocation, isLoading, setIsLoading} = useContext(LocationContext);
+	const {
+		getLocation,
+		isLoading,
+		setIsLoading,
+		ipNotFound,
+		setIpNotFound,
+	} = useContext(LocationContext);
 	const inputRef = useRef("");
 
-	const handleChange = event => (inputRef.current = event.target.value);
+	const handleChange = event => {
+		setIpNotFound(false);
+		inputRef.current = event.target.value;
+	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
@@ -24,9 +34,11 @@ function Searchbar() {
 	return (
 		<div className="above mid bottom">
 			<form value={inputRef} onChange={handleChange} onSubmit={handleSubmit}>
-				<FormControl isDisabled={isLoading}>
+				<FormControl isDisabled={isLoading} isInvalid={ipNotFound}>
 					<InputGroup>
 						<Input
+							focusBorderColor="gray.500"
+							errorBorderColor="red.300"
 							className="container"
 							variant="filled"
 							type="text"
@@ -38,7 +50,7 @@ function Searchbar() {
 						<InputRightElement>
 							<IconButton
 								aria-label="Search location"
-								icon={<Search2Icon color="gray.500"/>}
+								icon={<Search2Icon color="gray.500" />}
 								isRound
 								type="submit"
 								isLoading={isLoading}
@@ -46,6 +58,7 @@ function Searchbar() {
 							/>
 						</InputRightElement>
 					</InputGroup>
+					<FormErrorMessage>IP address not found</FormErrorMessage>
 				</FormControl>
 			</form>
 		</div>

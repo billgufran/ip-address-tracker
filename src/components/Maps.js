@@ -26,7 +26,6 @@ const center = {lat: -5.154112, lng: 119.437187};
 export default function Maps() {
 	const {location, showDetails} = useContext(LocationContext);
 	const mapRef = useRef();
-	const firstRender = useRef(true);
 
 	const {isLoaded, loadError} = useLoadScript({
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -42,12 +41,10 @@ export default function Maps() {
 	}, []);
 
 	useEffect(() => {
-		if (firstRender.current) {
-			firstRender.current = false;
-			return;
-		}
-		panTo({lat: location.location.lat, lng: location.location.lng});
-	}, [location]);
+	      if (location.location.lat !== "" && location.location.lng !== "") {
+         panTo({lat: location.location.lat, lng: location.location.lng});
+      }
+	}, [location, showDetails]);
 
 	if (loadError) return "Error";
 	if (!isLoaded) return "Loading...";

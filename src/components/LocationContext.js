@@ -1,32 +1,47 @@
-import React, { createContext, useState } from 'react';
+import axios from 'axios';
+import React, { createContext, useState } from "react";
 
 export const LocationContext = createContext();
 
-export default function LocationProvider(props) {
-   const [ location, setLocation ] = useState({})
-   const [ isLoading, setIsLoading ] = useState(false)
-   const [ showDetails, setShowDetails ] = useState(false)
+const def = {
+	location: {lat: "", lng: "", city: "", region: "", postalCode: ""}, isp: ""
+};
 
-   const getLocation = async (ipAddress) => {
+export default function LocationProvider(props) {
+	const [location, setLocation] = useState(def);
+	const [isLoading, setIsLoading] = useState(false);
+	const [showDetails, setShowDetails] = useState(false);
+   const [ipNotFound, setIpNotFound] = useState(false);
+
+	const getLocation = async ipAddress => {
 		try {
-			const data = await fetch(
+			const res = await axios.get(
 				`https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IP_GEOLOCATION}&ipAddress=${ipAddress}`
          );
-         const res = await data.json();
-         setLocation(res)
-         console.log({ lat: res.location.lat, lng: res.location.lng })
-         setIsLoading(false)
-         setShowDetails(true)
+         console.log(res)
+			setShowDetails(true);
+			setLocation(res.data);
 		} catch (error) {
-         console.error(error);
+			setIpNotFound(true);
+		} finally {
+			setIsLoading(false);
+			console.log(location);
 		}
-   };
+	};
 
-   const value = {getLocation, location, isLoading, setIsLoading, showDetails }
+	const value = {
+		getLocation,
+		location,
+		isLoading,
+		setIsLoading,
+		showDetails,
+		ipNotFound,
+		setIpNotFound,
+	};
 
-   return (
-      <LocationContext.Provider value={value}>
+	return (
+		<LocationContext.Provider value={value}>
 			{props.children}
 		</LocationContext.Provider>
-   )
+	);
 }

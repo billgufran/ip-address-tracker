@@ -35,7 +35,7 @@ function LocationDetails() {
 						type="Location"
 						value={`${location.location.city}, ${location.location.region} ${location.location.postalCode}`}
 					/>
-					<Data type="ISP" value={`${location.as.name}`} />
+					<Data type="ISP" value={`${location.isp}`} />
 					<Data
 						type="Coordinate"
 						value={`${location.location.lat}, ${location.location.lng}`}
